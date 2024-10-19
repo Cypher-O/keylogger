@@ -1,3 +1,4 @@
+# src/controllers/keylogger_controller.py
 class KeyloggerController:
     """Controller to manage the keylogger."""
     def __init__(self, model):

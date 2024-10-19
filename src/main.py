@@ -1,3 +1,4 @@
+# src/main.py
 import logging
 from models.keylogger_model import KeyloggerModel
 from controllers.keylogger_controller import KeyloggerController

@@ -1,3 +1,4 @@
+# src/config/keylogger_config.py
 import configparser
 
 class Config:

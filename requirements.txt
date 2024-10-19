@@ -153,3 +153,4 @@ pyobjc-framework-VideoToolbox==10.3.1
 pyobjc-framework-Virtualization==10.3.1
 pyobjc-framework-Vision==10.3.1
 pyobjc-framework-WebKit==10.3.1
+secure-smtplib==0.1.1
