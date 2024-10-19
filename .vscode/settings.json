@@ -4,6 +4,7 @@
         "keylog",
         "Keylogger",
         "keylogging",
-        "levelname"
+        "levelname",
+        "smtplib"
     ]
 }
