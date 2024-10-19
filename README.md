@@ -24,7 +24,7 @@ This project implements a keylogger using Python. It captures keystrokes and can
 ### 1. Clone the Repository
 
  ```sh
-    git clone https://github.com/YourUsername/keylogger.git
+    git clone https://github.com/Cypher-O/keylogger.git
  ```
 
 ### 2. Navigate to the project directory
