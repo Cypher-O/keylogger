@@ -12,13 +12,14 @@ class EmailSender:
         self.config = configparser.ConfigParser()
         self.config.read('../config/config.ini') 
         self.email_address = self.config['DEFAULT']['EmailAddress']
+        self.recipient_email_address = self.config['DEFAULT']['RecipientEmailAddress']
         self.email_password = self.config['DEFAULT']['EmailPassword']
 
     def prepare_mail(self, subject, body, attachment=None):
         """Prepare the email content."""
         msg = MIMEMultipart()
         msg["From"] = self.email_address
-        msg["To"] = self.email_address 
+        msg["To"] = self.recipient_email_address 
         msg["Subject"] = subject
         msg.attach(MIMEText(body, "plain"))
 
